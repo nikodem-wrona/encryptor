@@ -31,6 +31,24 @@ You will be prompted to enter a password when encrypting or decrypting a file. T
 - --input: Path to the input file.
 - --output: Path to the output file.
 
+## Running Tests
+
+To run the tests, use the following command:
+
+```sh
+go test
+```
+
+## Building the Program
+
+To build the program, use the following command:
+
+```sh
+go build -o encryptor main.go
+```
+
+This will create an executable named `encryptor` in the current directory.
+
 ## Note
 The source file will be deleted after encryption.
 Ensure you remember the password used for encryption, as it is required for decryption.
