@@ -1,8 +1,9 @@
-package main
+package internal
 
 import (
 	"os"
 	"testing"
+
 )
 
 func TestEncryptDecryptFile(t *testing.T) {
@@ -30,7 +31,7 @@ func TestEncryptDecryptFile(t *testing.T) {
 
 	// Encrypt the file
 	password := "testpassword"
-	err = encryptFile(inputFile.Name(), encryptedFile.Name(), password)
+	err = EncryptFile(inputFile.Name(), encryptedFile.Name(), password)
 	if err != nil {
 		t.Fatalf("failed to encrypt file: %v", err)
 	}
@@ -44,7 +45,7 @@ func TestEncryptDecryptFile(t *testing.T) {
 	defer os.Remove(decryptedFile.Name())
 
 	// Decrypt the file
-	err = decryptFile(encryptedFile.Name(), decryptedFile.Name(), password)
+	err = DecryptFile(encryptedFile.Name(), decryptedFile.Name(), password)
 	if err != nil {
 		t.Fatalf("failed to decrypt file: %v", err)
 	}
@@ -63,7 +64,7 @@ func TestEncryptDecryptFile(t *testing.T) {
 
 func TestEncryptFileWithInvalidInput(t *testing.T) {
 	// Try to encrypt a non-existent file
-	err := encryptFile("nonexistent.txt", "output.txt", "password")
+	err := EncryptFile("nonexistent.txt", "output.txt", "password")
 	if err == nil {
 		t.Fatalf("expected error when encrypting non-existent file, got nil")
 	}
@@ -71,7 +72,7 @@ func TestEncryptFileWithInvalidInput(t *testing.T) {
 
 func TestDecryptFileWithInvalidInput(t *testing.T) {
 	// Try to decrypt a non-existent file
-	err := decryptFile("nonexistent.txt", "output.txt", "password")
+	err := DecryptFile("nonexistent.txt", "output.txt", "password")
 	if err == nil {
 		t.Fatalf("expected error when decrypting non-existent file, got nil")
 	}
@@ -102,7 +103,7 @@ func TestDecryptFileWithWrongPassword(t *testing.T) {
 
 	// Encrypt the file
 	password := "testpassword"
-	err = encryptFile(inputFile.Name(), encryptedFile.Name(), password)
+	err = EncryptFile(inputFile.Name(), encryptedFile.Name(), password)
 	if err != nil {
 		t.Fatalf("failed to encrypt file: %v", err)
 	}
@@ -117,7 +118,7 @@ func TestDecryptFileWithWrongPassword(t *testing.T) {
 
 	// Try to decrypt the file with the wrong password
 	wrongPassword := "wrongpassword"
-	err = decryptFile(encryptedFile.Name(), decryptedFile.Name(), wrongPassword)
+	err = DecryptFile(encryptedFile.Name(), decryptedFile.Name(), wrongPassword)
 	if err == nil {
 		t.Fatalf("expected error when decrypting with wrong password, got nil")
 	}
